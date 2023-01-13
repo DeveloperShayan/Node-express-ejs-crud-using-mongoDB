@@ -1,0 +1,68 @@
+//Simple Middleware
+
+// app.use((req,res,next)=>{
+//    console.log('New Request Made');
+//    console.log('Host', req.hostname);
+//    console.log('Path',req.path);
+//    console.log('Method',req.method);
+//    next();
+// });
+
+
+
+//Crud Without Controller
+
+const express = require('express');
+const Blog = require('../models/blog');
+
+const router = express.Router();
+
+
+router.post('/add-blog',(req,res)=>{
+    const blog = new Blog(req.body);
+    blog.save()
+    .then((result)=>{
+       res.redirect('/');
+    })
+    .catch((err)=>{
+       console.log(err)
+    });
+ });
+ 
+ 
+ router.get('/',(req,res)=>{
+ 
+       Blog.find()
+       .sort({createdAt : -1})
+       .then((result)=>{
+          res.render('index',{title:'home',blogs : result});
+       })
+       .catch((err)=>{
+          console.log(err);
+       });
+ 
+ });
+ 
+ router.get('/single-blog/:id',(req,res)=>{
+    const id = req.params.id;
+    Blog.findById(id)
+    .then((result)=>{
+       res.render('single-blog',{blog : result, title: 'Single BLog'});
+    })
+    .catch((err)=>{
+       console.log(err);
+    })
+ });
+ 
+ 
+ router.delete('/delete-blog/:id',(req,res)=>{
+    const id = req.params.id;
+    Blog.findByIdAndDelete(id)
+    .then((result)=>{
+       res.json({redirect : '/'})
+    })
+    .catch((err)=>{
+       console.log(err);
+    })
+ });
+ 

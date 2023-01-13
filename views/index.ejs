@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs')  %> 
+<body>
+<%- include('./partials/nav.ejs')  %> 
+    <div class="m-2 p-2"></div>
+    <div class="container">
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <% if(blogs.length > 0){
+                blogs.forEach(blog => { %>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#<%= blog.id%>" aria-expanded="true" aria-controls="<%= blog.id%>">
+                            <%= blog.title%>
+                        </button>
+                        </h2>
+                        <div id="<%= blog.id%>" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <strong>Snippet : </strong> <%= blog.snippet%>
+                            <br/>
+                            <strong>Body : </strong> <%= blog.body%>
+                            <br/>
+                            <strong><a href="/single-blog/<%= blog.id%>">Read More...</a></strong>
+                        </div>
+                    </div>
+                <%})
+            } %>
+        </div>
+    </div>
+<%- include('./partials/footer.ejs')  %> 
+</body>
+</html>

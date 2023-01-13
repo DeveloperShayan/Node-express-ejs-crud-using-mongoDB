@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs')  %> 
+<body>
+<%- include('../partials/nav.ejs')  %> 
+    <div class="m-2 p-2"></div>
+    <div class="container rounded-5 border-2">
+        <h3 align="center">Update Your Blog</h3>
+        <form action="/update-blog/<%=blog._id%>?_method=PUT" method="POST" class="form-control p-2">
+            <label for="title" class="form-control">Blog Title:</label>
+            <input type="text" name="blog[title]" class="form-control" id="title" required value="<%= blog.title%>">
+            <br/>
+            <label for="snippet" class="form-control">Blog Snippet:</label>
+            <input type="text" name="blog[snippet]" class="form-control" id="snippet" required value="<%= blog.snippet%>">
+            <br/>
+            <label for="body" class="form-control">Blog Body</label>
+            <textarea name="blog[body]" class="form-control" id="body" required><%= blog.title%></textarea>
+            <br/>
+            <button class="form-control btn btn-outline-success">Submit</button>
+        </form>
+    </div>
+
+ <%- include('../partials/footer.ejs')  %> 
+</body>
+</html>
