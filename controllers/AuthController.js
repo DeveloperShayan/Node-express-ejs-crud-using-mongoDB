@@ -11,7 +11,7 @@ const HandleErrors = (err) =>{
    if(err.code === 11000)
    {
       errors.email = "User with this email already registered";
-         return errors.email;
+         return errors;
    }
    console.log(err.message);
    if(err.message == "Incorrect Email")
