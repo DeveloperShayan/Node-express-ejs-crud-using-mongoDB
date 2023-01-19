@@ -66,3 +66,128 @@ router.post('/add-blog',(req,res)=>{
     })
  });
  
+
+
+
+
+
+
+
+
+
+
+//singup API
+     const {username, email, password} = req.body;
+
+    try {
+
+        //Must'nt be an existing user.
+        const existingUser = await authModel.findOne({email : email});
+        if(existingUser)
+        {
+            return res.status(400).json({message : 'User Already Exists'});
+        }
+
+        //Harshed Password
+        const harshedPassword = await bcrypt.hash(password,10);
+
+        //User Creation
+        const result = await authModel.create({
+            email : email,
+            password : harshedPassword,
+            username : username
+        });
+
+         //Token Generate
+        const token = jwt.sign({email : result.email , id : result.id}, SECRET_KEY);
+        res.status(201).json({user : result , token : token});
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message : "Something went wrong"});
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if(response.token){
+                localStorage.setItem("")
+                // href="./dashboard"
+
+//// dashboard page
+
+let user = localStorage.getItem("user")
+
+
+user ? user.name : ""
+                let token = localStorage.getItem("token")
+                if(token){
+                   
+                    // post fatch request 
+                    // body { token }
+
+
+                    // respone agr token valid aa te do nothing
+                    // ager valid nahe ya expired aa ta remove token from localstorage and redirect to login page
+
+
+                }
+                else
+                // redirect to login page
+            }
+
+
+
+
+
+      <!-- <script>
+        function sendData () {
+          var data = new FormData();
+          data.append("name", document.getElementById("name").value);
+          data.append("email", document.getElementById("email").value);
+          data.append("username", document.getElementById("username").value);
+          data.append("password", document.getElementById("password").value);
+
+          fetch ("/signup",{
+              method : "POST",
+              body : data
+          })
+          .then((response)=>response.json())
+          .then((data)=>window.location.href = data.redirect)
+          .catch(err => console.log(err));
+          
+        } -->
+
+      </script>
+  
+
+
+
+
+  //cookies
+
+// app.get('/set-cookies',(req,res)=>{
+
+//     res.cookie('newUser',false);
+//     res.cookie('isEmployee', true, {maxAge : 1000 * 60 * 60 * 24, httpOnly : true})
+
+//     res.send("we got the cookies");
+
+// });
+
+// app.get('/read-cookies',(req,res)=>{
+//     const cookies = req.cookies;
+//     console.log(cookies);
+
+//     res.json(cookies);
+// });
